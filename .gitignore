@@ -1,0 +1,19 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+.vs/
+*.suo
+Project1/x64/Debug/
+*.exe
+*.dll
+*.lib
+*.pdb
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.vcxproj
+/Project1.vcxproj.user
+/Project1.vcxproj
+/Project1.vcxproj.filters
+/Project1.vcxproj.user
