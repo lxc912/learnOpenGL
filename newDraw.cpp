@@ -355,7 +355,7 @@ namespace newDraw_np {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		// 加载并生成纹理
 		int width, height, nrChannels;
-		unsigned char* data = stbi_load("resource/container.jfif", &width, &height, &nrChannels, 0);
+		unsigned char* data = stbi_load("./resource/container.jfif", &width, &height, &nrChannels, 0);
 		if (data)
 		{
 			//GL_TEXTURE_2D:目标纹理类型，表示你正在创建一个二维纹理。
@@ -376,11 +376,13 @@ namespace newDraw_np {
 			std::cout << "Failed to load image: " << stbi_failure_reason() << std::endl;
 			return 0;
 		}
+		//-------------------test-----------------------
 		stbi_image_free(data);
 		//load the second texture
 		unsigned int texture2;
 		glGenTextures(1, &texture2);
 		glBindTexture(GL_TEXTURE_2D, texture2);
+
 		// 为当前绑定的纹理对象设置环绕、过滤方式
 		// set the texture wrapping parameters
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -389,7 +391,11 @@ namespace newDraw_np {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		stbi_set_flip_vertically_on_load(true);
-		 data = stbi_load("resource/container3.png", &width, &height, &nrChannels, 0);
+		GLint texWidth, texHeight;
+		glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &texWidth);
+		glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &texHeight);
+		std::cout << "Texture Width: " << texWidth << ", Height: " << texHeight << std::endl;
+		data = stbi_load("./resource/container3.png", &width, &height, &nrChannels, 0);
 		if (data)
 		{
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
@@ -418,7 +424,6 @@ namespace newDraw_np {
 		// render loop
 		// -----------
 		float fov = 30.0;
-
 		while (!glfwWindowShouldClose(window))
 		{
 			if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
@@ -499,7 +504,6 @@ namespace newDraw_np {
 	glm::mat4 transform(glm::mat4 input) {
 
 		//glm::mat4 trans;//0.99版本前初始化后默认值就是单位矩阵， 0.99后是全0矩阵
-
 		glm::mat4 trans = glm::translate(input, glm::vec3(1.0f, 1.0f, 0.0f));//位移变化：给一个位移坐标,在输入矩阵上叠加一个位移操作生成一个变换矩阵
 		//printVec4(vec4);
 		return trans;
@@ -523,5 +527,4 @@ namespace newDraw_np {
 	int newdraw() {
 		return drawWithTexture();
 	}
-
 }
